@@ -1,0 +1,15 @@
+div {
+	background: red;
+}
+
+@media screen and (min-width: 500px) {
+	div {
+		background: green;
+	}
+}
+
+@media screen and (min-width: 1000px) {
+	div {
+		background: blue;
+	}
+}
