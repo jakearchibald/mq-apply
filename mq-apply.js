@@ -41,9 +41,7 @@ var css = fs.open(opts['in'], 'r').read();
 page.onLoadFinished = function(status) {
 	console.log(page.evaluate(
 		(function() {
-			var css = CSS,
-				opts = OPTS,
-				style = document.createElement('style');
+			var opts = OPTS;
 
 			function toArray(arrayLike) {
 				return Array.prototype.slice.call(arrayLike, 0);
@@ -58,10 +56,6 @@ page.onLoadFinished = function(status) {
 					return rule.cssText;
 				}).join('');
 			}
-
-			style.appendChild( document.createTextNode(css) );
-
-			document.body.appendChild(style);
 
 			return toArray( document.styleSheets[0].cssRules ).map( function(rule) {
 				if ( rule instanceof CSSMediaRule ) {
@@ -83,8 +77,8 @@ page.onLoadFinished = function(status) {
 					return rule.cssText;
 				}
 			}).join('');
-		}).toString().replace( 'CSS', JSON.stringify(css) ).replace( 'OPTS', JSON.stringify(opts) )
+		}).toString().replace( 'OPTS', JSON.stringify(opts) )
 	));
 };
 
-page.content = '<!doctype html>';
+page.content = '<!doctype html><style>' + css + '</style>';
