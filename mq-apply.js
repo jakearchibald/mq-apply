@@ -43,8 +43,7 @@ page.onLoadFinished = function(status) {
 		(function() {
 			var css = CSS,
 				opts = OPTS,
-				style = document.createElement('style'),
-				cssTexts;
+				style = document.createElement('style');
 
 			function toArray(arrayLike) {
 				return Array.prototype.slice.call(arrayLike, 0);
@@ -57,14 +56,14 @@ page.onLoadFinished = function(status) {
 			function rulesText(rules) {
 				return toArray( rules ).map(function(rule) {
 					return rule.cssText;
-				}).join("");
+				}).join('');
 			}
 
 			style.appendChild( document.createTextNode(css) );
 
 			document.body.appendChild(style);
 
-			cssTexts = toArray( document.styleSheets[0].cssRules ).map( function(rule) {
+			return toArray( document.styleSheets[0].cssRules ).map( function(rule) {
 				if ( rule instanceof CSSMediaRule ) {
 					var minWidth = /min-width:\s*([\d\.]+)([\w%]+)/.exec( rule.media.mediaText ),
 						maxWidth = /max-width:\s*([\d\.]+)([\w%]+)/.exec( rule.media.mediaText );
@@ -83,8 +82,7 @@ page.onLoadFinished = function(status) {
 				else {
 					return rule.cssText;
 				}
-			});
-			return cssTexts.join('');
+			}).join('');
 		}).toString().replace( 'CSS', JSON.stringify(css) ).replace( 'OPTS', JSON.stringify(opts) )
 	));
 };
